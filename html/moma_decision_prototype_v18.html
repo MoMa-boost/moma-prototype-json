@@ -442,18 +442,11 @@
       const wagon = State.currentWagon;
       const isRIDWagon = wagon.danger_goods === true;
       
-      // Visibility of Operational State box: only if danger_goods = true
+      // Operational State is now always required and visible
       const opBox = document.getElementById('opStateBox');
-      if (isRIDWagon) {
-          opBox.classList.remove('hidden');
-      } else {
-          opBox.classList.add('hidden');
-      }
+      opBox.classList.remove('hidden');
 
-      let status = 'C'; // Default for non-RID wagons
-      if (isRIDWagon) {
-          status = document.querySelector('input[name="wagonStatus"]:checked').value;
-      }
+      const status = document.querySelector('input[name="wagonStatus"]:checked').value;
       State.currentStatus = status;
       
       // Visibility of RID box: only if danger_goods = true AND status != 'C'
