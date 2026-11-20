@@ -170,7 +170,7 @@
             </label>
           </div>
           <div class="text-[10px] text-slate-400 leading-tight">
-            <span id="txtModeDesc">System matches wagon GPS to registered sites in 50km radius.</span>
+            <span id="txtModeDesc">System matches wagon GPS to registered sites in <span id="lblModeRadius">50km</span> radius.</span>
           </div>
         </div>
 
@@ -181,7 +181,7 @@
             <span id="badgeFeasibility" class="px-2 py-0.5 rounded text-[10px] font-bold"></span>
           </div>
           <div class="text-[11px] space-y-1 text-slate-300">
-            <div class="flex justify-between" id="rowSitesInRadius"><span class="text-slate-400">Sites in 50km Radius:</span><span id="txtSitesInRadius" class="font-bold text-white">0</span></div>
+            <div class="flex justify-between" id="rowSitesInRadius"><span class="text-slate-400">Sites in <span id="lblSummaryRadius">50km</span> Radius:</span><span id="txtSitesInRadius" class="font-bold text-white">0</span></div>
             <div class="flex justify-between" id="rowQualifiedSites"><span class="text-slate-400">Fully Qualified Sites (All INTs):</span><span id="txtQualifiedSites" class="font-bold text-emerald-400">0</span></div>
             <div class="flex justify-between"><span class="text-slate-400">Available Mobile Suppliers (All INTs):</span><span id="txtMatchedSuppliers" class="font-bold text-vtgCyan">0</span></div>
           </div>
@@ -412,7 +412,7 @@
         lblReg.className = "flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded bg-vtgBlue text-white font-bold";
         lblAdHoc.className = "flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded text-slate-400 hover:text-white transition";
         document.getElementById('adHocConfirmBox').classList.add('hidden');
-        document.getElementById('txtModeDesc').textContent = "System matches wagon GPS to registered sites in 50km radius.";
+        document.getElementById('txtModeDesc').innerHTML = `System matches wagon GPS to registered sites in <span id="lblModeRadius">${State.searchRadiusKm}km</span> radius.`;
         
         document.getElementById('rowSitesInRadius').style.display = 'flex';
         document.getElementById('rowQualifiedSites').style.display = 'flex';
@@ -441,6 +441,13 @@
       if (!State.currentWagon) return;
       const wagon = State.currentWagon;
       const isRIDWagon = wagon.danger_goods === true;
+      
+      // Update radius labels in UI
+      const rText = State.searchRadiusKm + "km";
+      const lblMode = document.getElementById('lblModeRadius');
+      const lblSum = document.getElementById('lblSummaryRadius');
+      if (lblMode) lblMode.textContent = rText;
+      if (lblSum) lblSum.textContent = rText;
       
       // Operational State is now always required and visible
       const opBox = document.getElementById('opStateBox');
